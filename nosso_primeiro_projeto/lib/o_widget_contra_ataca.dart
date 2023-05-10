@@ -65,17 +65,30 @@ class ColorGalery extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            color: colorOne,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: colorOne,
+            ),
             width: 100,
             height: 150,
           ),
           Container(
-            color: colorTwo,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: colorTwo,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
+                  ),
+                )),
             width: 100,
             height: 150,
           ),
           Container(
-            color: colorThree,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: colorThree,
+            ),
             width: 100,
             height: 150,
           ),
