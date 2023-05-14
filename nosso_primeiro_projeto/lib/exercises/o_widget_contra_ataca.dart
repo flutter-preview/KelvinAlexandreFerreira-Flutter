@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter: Primeiros Passos'),
+          title: const Text('Flutter: Primeiros Passos'),
         ),
         body: ListView(
           children: [
@@ -76,7 +76,7 @@ class ColorGalery extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: colorTwo,
-                image: DecorationImage(
+                image: const DecorationImage(
                   image: NetworkImage(
                     'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
                   ),
