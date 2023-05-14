@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nosso_primeiro_projeto/components/maestry.dart';
 
 import 'difficulty.dart';
 
@@ -15,19 +16,14 @@ class Task extends StatefulWidget {
 
 class _TaskState extends State<Task> {
   int nivel = 0;
+  int maestryLevel = 0;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: Colors.blue,
-          ),
-          height: 140,
-        ),
+        Maestry(maestryLevel: maestryLevel),
         Column(
           children: [
             Container(
@@ -80,6 +76,7 @@ class _TaskState extends State<Task> {
                       onPressed: () {
                         setState(() {
                           nivel++;
+                          defineMaestryLevel();
                         });
                         //print(nivel);
                       },
@@ -108,9 +105,7 @@ class _TaskState extends State<Task> {
                     width: 200,
                     child: LinearProgressIndicator(
                       color: Colors.white,
-                      value: (widget.dificuldade > 0)
-                          ? (nivel / widget.dificuldade) / 10
-                          : 1,
+                      value: (widget.dificuldade > 0) ? difficultByLevel() : 1,
                     ),
                   ),
                 ),
@@ -130,5 +125,15 @@ class _TaskState extends State<Task> {
         ),
       ]),
     );
+  }
+
+  double difficultByLevel() => (nivel / widget.dificuldade) / 10;
+
+  void defineMaestryLevel() {
+    if ((difficultByLevel() == 1) &&
+        (maestryLevel <= Maestry.maxMaestryLevel)) {
+      maestryLevel++;
+      nivel = 0;
+    }
   }
 }
