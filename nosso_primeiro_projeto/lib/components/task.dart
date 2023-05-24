@@ -8,16 +8,16 @@ class Task extends StatefulWidget {
   final String foto;
   final int dificuldade;
 
-  const Task(this.nome, this.foto, this.dificuldade, {super.key});
+  Task(this.nome, this.foto, this.dificuldade, {super.key});
+
+  int nivel = 0;
+  int maestryLevel = 0;
 
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  int nivel = 0;
-  int maestryLevel = 0;
-
   bool assetOrNetwork() {
     if (widget.foto.contains('http')) {
       return false;
@@ -30,7 +30,7 @@ class _TaskState extends State<Task> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(children: [
-        Maestry(maestryLevel: maestryLevel),
+        Maestry(maestryLevel: widget.maestryLevel),
         Column(
           children: [
             Container(
@@ -87,7 +87,7 @@ class _TaskState extends State<Task> {
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          nivel++;
+                          widget.nivel++;
                           defineMaestryLevel();
                         });
                         //print(nivel);
@@ -124,7 +124,7 @@ class _TaskState extends State<Task> {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    'Nivel: $nivel',
+                    'Nivel: ${widget.nivel}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -139,13 +139,13 @@ class _TaskState extends State<Task> {
     );
   }
 
-  double difficultByLevel() => (nivel / widget.dificuldade) / 10;
+  double difficultByLevel() => (widget.nivel / widget.dificuldade) / 10;
 
   void defineMaestryLevel() {
     if ((difficultByLevel() == 1) &&
-        (maestryLevel <= Maestry.maxMaestryLevel)) {
-      maestryLevel++;
-      nivel = 0;
+        (widget.maestryLevel <= Maestry.maxMaestryLevel)) {
+      widget.maestryLevel++;
+      widget.nivel = 0;
     }
   }
 }
