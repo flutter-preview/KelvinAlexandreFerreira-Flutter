@@ -26,13 +26,28 @@ class _InitialScreenState extends State<InitialScreen> {
             future: TaskDao().findAll(),
             builder: (context, snapshot) {
               List<Task>? items = snapshot.data;
-              return ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final Task tarefa = items[index];
-                  return tarefa;
-                },
-              );
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  break;
+                case ConnectionState.waiting:
+                  break;
+                case ConnectionState.active:
+                  break;
+                case ConnectionState.done:
+                  if (snapshot.hasData && items != null) {
+                    if (items.isNotEmpty) {
+                      return ListView.builder(
+                        itemCount: items.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Task tarefa = items[index];
+                          return tarefa;
+                        },
+                      );
+                    }
+                  }
+                  break;
+                default:
+              }
             }),
       ),
       floatingActionButton: FloatingActionButton(
