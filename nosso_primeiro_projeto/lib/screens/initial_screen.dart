@@ -18,6 +18,13 @@ class _InitialScreenState extends State<InitialScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: Icon(Icons.refresh))
+        ],
         title: const Text('Tarefas'),
       ),
       body: Padding(
