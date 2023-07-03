@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nosso_primeiro_projeto/components/maestry.dart';
+import 'package:nosso_primeiro_projeto/data/task_dao.dart';
 
 import 'difficulty.dart';
 
@@ -8,7 +9,8 @@ class Task extends StatefulWidget {
   final String foto;
   final int dificuldade;
 
-  Task(this.nome, this.foto, this.dificuldade, {super.key});
+  Task(this.nome, this.foto, this.dificuldade, this.nivel, this.maestryLevel,
+      {super.key});
 
   int nivel = 0;
   int maestryLevel = 0;
@@ -85,10 +87,37 @@ class _TaskState extends State<Task> {
                     height: 52,
                     width: 52,
                     child: ElevatedButton(
+                      onLongPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Confirmação'),
+                              content: Text('Confirma a exclusão do registro?'),
+                              actions: [
+                                TextButton(
+                                  child: Text('Sim'),
+                                  onPressed: () {
+                                    TaskDao().delete(widget.nome);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('Não'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                       onPressed: () {
                         setState(() {
                           widget.nivel++;
                           defineMaestryLevel();
+                          saveTask();
                         });
                         //print(nivel);
                       },
@@ -147,5 +176,10 @@ class _TaskState extends State<Task> {
       widget.maestryLevel++;
       widget.nivel = 0;
     }
+  }
+
+  void saveTask() {
+    TaskDao().save(Task(widget.nome, widget.foto, widget.dificuldade,
+        widget.nivel, widget.maestryLevel));
   }
 }
