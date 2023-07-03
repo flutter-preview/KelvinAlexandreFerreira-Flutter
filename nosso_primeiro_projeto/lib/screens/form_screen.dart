@@ -151,7 +151,9 @@ class _FormScreenState extends State<FormScreen> {
                         TaskDao().save(Task(
                             nameController.text,
                             imageController.text,
-                            int.parse(difficultyController.text)));
+                            int.parse(difficultyController.text),
+                            0,
+                            0));
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Printando nova Tarefa'),
